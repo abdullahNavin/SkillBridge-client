@@ -1,7 +1,9 @@
-export default function page() {
+import HeroSection from "@/components/layout/HeroSection";
+
+export default function Home() {
     return (
         <div>
-            <h1 className="text-3xl font-bold underline">Hello from common layout!</h1>
+            <HeroSection></HeroSection>
         </div>
     );
 }
