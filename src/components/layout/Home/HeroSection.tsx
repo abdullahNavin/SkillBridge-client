@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { HiCheckBadge } from "react-icons/hi2";
 
 export default function HeroSection() {
@@ -12,9 +13,9 @@ export default function HeroSection() {
             </div>
 
             <div>
-                <button className="bg-black text-gray-200 border border-gray-700 font-bold px-6 py-3 rounded-md mt-8 hover:bg-gray-700 transition-colors">Get Started</button>
+                <button className="bg-black text-gray-200 border border-gray-700 font-bold px-6 py-3 rounded-md mt-8 hover:bg-gray-700 transition-colors cursor-pointer">Get Started</button>
 
-                <button className="bg-gray-700 text-white px-6 py-3 rounded-md mt-8 ml-4 hover:bg-gray-600 transition-colors">Browse Tutor</button>
+                <button className="bg-gray-700 text-white px-6 py-3 rounded-md mt-8 ml-4 hover:bg-gray-600 transition-colors font-bold cursor-pointer"><Link href="/browse-tutors">Browse Tutors</Link></button>
             </div>
         </div>
     );
