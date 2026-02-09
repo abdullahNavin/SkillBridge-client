@@ -1,6 +1,7 @@
 import HeroSection from "@/components/modules/Home/HeroSection";
 import OnboardingSteps from "@/components/modules/Home/OnBoarding";
 import ServiceSection from "@/components/modules/Home/ServiceSection";
+import SuccessStories from "@/components/modules/Home/SuccessStories";
 
 export default function Home() {
     return (
@@ -8,6 +9,7 @@ export default function Home() {
             <HeroSection />
             <ServiceSection />
             <OnboardingSteps />
+            <SuccessStories />
         </div>
     );
 }
