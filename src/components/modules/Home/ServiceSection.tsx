@@ -11,7 +11,7 @@ export default function ServiceSection() {
                 <p className="dark:text-gray-400 md:w-[50%]">Our platform is designed to provide best 1-on-1 learning experience through personalized tutoring and expert guidance.</p>
             </div>
             <div className="flex flex-col md:flex-row gap-8 md:gap-4 justify-between container mx-auto my-10 px-4 md:px-0">
-                <Card className="mx-auto w-full md:max-w-sm mx-0">
+                <Card className=" w-full md:max-w-sm mx-0">
                     <CardHeader>
                         <MdStars className="text-4xl text-yellow-500" />
                         <CardTitle>Top Experts</CardTitle>
@@ -35,7 +35,7 @@ export default function ServiceSection() {
                     </CardContent>
                 </Card>
 
-                <Card className="mx-auto w-full md:max-w-sm mx-0">
+                <Card className=" w-full md:max-w-sm mx-0">
                     <CardHeader>
                         <GiProgression className="text-4xl text-green-500" />
                         <CardTitle>Progress Tracking</CardTitle>
