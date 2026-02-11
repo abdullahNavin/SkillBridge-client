@@ -73,12 +73,14 @@ export default function BrowsTutor() {
                                 />
 
                                 <div>
-                                    <p className="font-medium">{tutor.name}</p>
+                                    <p className="font-medium flex gap-2 items-center">{tutor.name} <span className={
+                                        `bg-green-500 rounded-full h-3 w-3 ${tutor.isAvailable ? "block" : "hidden"}`
+                                    }></span></p>
                                     <p className="text-sm text-muted-foreground">{tutor.qualifications}</p>
                                 </div>
                                 <div className="flex items-start h-20 flex-1">
                                     <div className="flex items-center gap-1">
-                                        <Star className="w-2 h-2 fill-yellow-400 text-yellow-400" />
+                                        <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" />
                                         <p >{tutor.rating}</p>
                                         <p className="text-muted-foreground text-[12px]"> ({tutor.totalReviews})</p>
                                     </div>

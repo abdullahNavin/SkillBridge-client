@@ -6,7 +6,7 @@ import { userService } from "@/components/service/user.service";
 
 export default async function Home() {
     const session = await userService.getSession()
-    console.log(session);
+    // console.log(session);
 
     return (
         <div>
