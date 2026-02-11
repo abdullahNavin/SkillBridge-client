@@ -1,7 +1,13 @@
-export default function page() {
+import BrowsTutor from "@/components/modules/BrowsTutor/BrowsTutor";
+import Header from "@/components/modules/BrowsTutor/Header";
+import SearchComp from "@/components/modules/BrowsTutor/SearchComp";
+
+export default function BrowseTutorsPage() {
     return (
         <div>
-            <h1>this is browse tutors page</h1>
+            <Header />
+            <SearchComp />
+            <BrowsTutor />
         </div>
     );
 }

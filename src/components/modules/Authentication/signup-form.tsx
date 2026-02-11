@@ -19,6 +19,7 @@ import { env } from "@/env"
 import { authClient } from "@/lib/auth-client"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -34,6 +35,8 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
 
   const router = useRouter()
 
+  const [role, setRole] = useState<"STUDENT" | "TUTOR">("STUDENT")
+
   const {
     reset,
     register,
@@ -47,8 +50,9 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
         name: data.name,
         email: data.email,
         password: data.password,
+        role,
         // callbackURL: FrontendUrl || "http://localhost:3000",
-      })
+      } as unknown as Parameters<typeof authClient.signUp.email>[0])
 
       if (error) {
         toast.error(`Signup failed: ${error.message}`)
@@ -108,7 +112,6 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
               )}
             </Field>
 
-
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
@@ -135,7 +138,6 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
               )}
             </Field>
 
-
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
               <Input
@@ -160,7 +162,12 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
               )}
             </Field>
 
+            <Field>
+              <FieldLabel>Account Type</FieldLabel>
+              <Button type="button" variant={role === "STUDENT" ? "default" : "outline"} onClick={() => setRole("STUDENT")}>Student</Button>
 
+              <Button type="button" variant={role === "TUTOR" ? "default" : "outline"} onClick={() => setRole("TUTOR")}>Tutor</Button>
+            </Field>
             <FieldGroup>
               <Field>
                 <Button type="submit" className="cursor-pointer" disabled={isSubmitting}>

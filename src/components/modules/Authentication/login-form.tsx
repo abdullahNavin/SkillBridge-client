@@ -47,7 +47,8 @@ export function LoginForm({
         password: data.password,
         callbackURL: FrontendUrl,
       })
-      reset()
+
+      console.log(userData, error);
       if (error) {
         toast.error(`Login failed: ${error.message}`)
       }

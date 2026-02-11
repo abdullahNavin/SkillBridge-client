@@ -1,11 +1,10 @@
 import { LoginForm } from "@/components/modules/Authentication/login-form"
 import { userService } from "@/components/service/user.service"
-import { authClient } from "@/lib/auth-client"
-import { cookies } from "next/headers"
 
 export default async function Page() {
 
-  const session = await userService.getSession()
+  // const session = await userService.getSession()
+
   // console.log(session);
 
   return (
