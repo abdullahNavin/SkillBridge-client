@@ -29,7 +29,7 @@ export default function NotFound() {
                     </Link>
                     <button
                         onClick={() => window.history.back()}
-                        className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                        className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors cursor-pointer"
                     >
                         Go Back
                     </button>

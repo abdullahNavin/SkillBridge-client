@@ -3,11 +3,11 @@
 import { SelectCategory } from "./SelectCategory";
 import { SelectRating } from "./SelectRating";
 import { SelectPrice } from "./SelectPrice";
-import { useState } from "react";
+// import { useState } from "react";
 
 export default function SearchComp() {
-    const [category, setCategory] = useState("")
-    console.log(category);
+    // const [category, setCategory] = useState("")
+    // console.log(category);
 
     return (
         <div className=" my-8 dark:bg-[#151515] bg-gray-300">
@@ -15,9 +15,9 @@ export default function SearchComp() {
                 <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                     <input type="text" className="px-4 py-1.5 rounded-2xl border border-gray-600 outline-none dark:bg-[#151515] dark:text-white mb-6 md:mb-0 w-[70%] md:w-[40%] focus:w-[72%] md:focus:w-[50%] duration-500" placeholder="Search tutors..." />
 
-                    <SelectCategory setCategory={setCategory} />
-                    <SelectRating />
-                    <SelectPrice />
+                    {/* <SelectCategory setCategory={setCategory} /> */}
+                    {/* <SelectRating />
+                    <SelectPrice /> */}
                 </div>
             </div>
         </div>

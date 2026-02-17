@@ -15,10 +15,10 @@ export const userService = {
                 cache: 'no-store'
             })
             const session = await res.json()
-            return { date: session, error: null }
+            return { data: session, error: null }
 
         } catch (error) {
-            return { date: null, error: "Failed to fetch session" }
+            return { data: null, error: "Failed to fetch session" }
         }
     }
 }

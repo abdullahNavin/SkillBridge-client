@@ -6,7 +6,7 @@ export const categoryService = {
     getCategories: async () => {
         try {
             const res = await fetch(`${Api_url}/category`, {
-                cache: 'no-store',
+                // cache: 'no-store',
                 next: {
                     revalidate: 30,
                     tags: ['categories']

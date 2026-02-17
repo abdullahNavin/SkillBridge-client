@@ -5,7 +5,7 @@ import SuccessStories from "@/components/modules/Home/SuccessStories";
 import { userService } from "@/components/service/user.service";
 
 export default async function Home() {
-    const session = await userService.getSession()
+    // const session = await userService.getSession()
     // console.log(session);
 
     return (

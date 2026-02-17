@@ -2,6 +2,8 @@
 
 import { Menu, } from "lucide-react";
 
+import dynamic from "next/dynamic";
+
 import { cn } from "@/lib/utils";
 
 import {
@@ -26,10 +28,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ModeToggle } from "./modeToggle";
+
+const ModeToggle = dynamic(
+  () => import("./modeToggle").then((mod) => mod.ModeToggle),
+  { ssr: false }
+)
+
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { Session } from "better-auth";
+// import { ModeToggle } from "./modeToggle";
+// import { useEffect, useState } from "react";
 
 interface MenuItem {
   title: string;
@@ -49,6 +60,13 @@ interface Navbar1Props {
     className?: string;
   };
   menu?: MenuItem[];
+  session: {
+    data: Session | null;
+    error: null;
+  } | {
+    data: null;
+    error: string;
+  };
   auth?: {
     login: {
       title: string;
@@ -83,10 +101,19 @@ const Navbar1 = ({
     login: { title: "Login", url: "/login" },
     signup: { title: "Sign up", url: "/signup" },
   },
+  session,
   className,
 }: Navbar1Props) => {
 
-  const { data: session } = authClient.useSession()
+
+  // const [mounted, setMounted] = useState(false);
+
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+
+
+  // const { data: session, isPending } = authClient.useSession()
   // console.log(session);
 
   const handleLogout = async () => {
@@ -116,15 +143,19 @@ const Navbar1 = ({
             </NavigationMenu>
           </div>
 
-          {/* auth */}
+
           <div className="flex gap-2">
             <div>
               <ModeToggle />
             </div>
 
             {
-              session ? (
-                <Button onClick={handleLogout} className="cursor-pointer" variant="outline">
+              session.data ? (
+                <Button
+                  onClick={handleLogout}
+                  className="cursor-pointer"
+                  variant="outline"
+                >
                   Logout
                 </Button>
               ) : (
@@ -138,6 +169,7 @@ const Navbar1 = ({
                 </>
               )
             }
+
 
           </div>
         </nav>

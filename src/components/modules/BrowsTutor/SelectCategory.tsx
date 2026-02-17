@@ -1,4 +1,6 @@
-import { categoryService } from "@/components/service/category.service"
+"use client"
+
+import { categoryAction } from "@/actions/category.action"
 import {
     Select,
     SelectContent,
@@ -16,8 +18,9 @@ interface Category {
 }
 
 export async function SelectCategory({ setCategory }: { setCategory: (category: string) => void }) {
-    const categories = await categoryService.getCategories()
-    // console.log(categories);
+
+    const categories = await categoryAction()
+    console.log(categories);
     return (
         <Select onValueChange={(value) => setCategory(value)}>
             <SelectTrigger className="w-[70%] md:max-w-48">
