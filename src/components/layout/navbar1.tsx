@@ -37,10 +37,8 @@ const ModeToggle = dynamic(
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
 import { Session } from "better-auth";
-// import { ModeToggle } from "./modeToggle";
-// import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface MenuItem {
   title: string;
@@ -56,17 +54,10 @@ interface Navbar1Props {
     url: string;
     src: string;
     alt: string;
-    // title: string;
     className?: string;
   };
   menu?: MenuItem[];
-  session: {
-    data: Session | null;
-    error: null;
-  } | {
-    data: null;
-    error: string;
-  };
+  session: Session | null;
   auth?: {
     login: {
       title: string;
@@ -105,19 +96,13 @@ const Navbar1 = ({
   className,
 }: Navbar1Props) => {
 
-
-  // const [mounted, setMounted] = useState(false);
-
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
-
-
-  // const { data: session, isPending } = authClient.useSession()
   // console.log(session);
+
+  const router = useRouter()
 
   const handleLogout = async () => {
     await authClient.signOut()
+    router.refresh()
     toast.success("Logged out successfully")
   }
 
@@ -150,14 +135,12 @@ const Navbar1 = ({
             </div>
 
             {
-              session.data ? (
-                <Button
-                  onClick={handleLogout}
-                  className="cursor-pointer"
-                  variant="outline"
-                >
-                  Logout
-                </Button>
+              session ? (
+                <form action={handleLogout}>
+                  <Button type="submit" className="cursor-pointer" variant="outline">
+                    Logout
+                  </Button>
+                </form>
               ) : (
                 <>
                   <Button asChild variant="outline" size="sm">

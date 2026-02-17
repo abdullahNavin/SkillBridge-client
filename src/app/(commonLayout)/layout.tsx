@@ -9,7 +9,7 @@ export default async function layout({ children }: { children: React.ReactNode }
 
     return (
         <div className=" mx-auto">
-            <Navbar1 session={session} />
+            <Navbar1 session={session.data} />
             {children}
             <Footer2 className="mx-auto container px-4 md:px-0" />
         </div>
