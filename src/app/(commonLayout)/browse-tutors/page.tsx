@@ -2,6 +2,7 @@ import { categoryAction } from "@/actions/category.action";
 import BrowsTutor from "@/components/modules/BrowsTutor/BrowsTutor";
 import Header from "@/components/modules/BrowsTutor/Header";
 import SearchComp from "@/components/modules/BrowsTutor/SearchComp";
+import { tutorProfileService } from "@/components/service/tutorProfile.service";
 import { env } from "@/env";
 
 interface Props {
@@ -29,14 +30,7 @@ export default async function BrowseTutorsPage({ searchParams }: Props) {
     if (price) query.set("price", price)
     if (rating) query.set("rating", rating)
 
-    const res = await fetch(`${env.API_URL}/tutor?${query}`, {
-        cache: "no-cache"
-    })
-    // console.log("API URL:", `${env.API_URL}/tutor/?${query}`);
-    // console.log(res);
-    const tutors = await res.json()
-
-    // console.log("tutors:", tutors);
+    const tutors = await tutorProfileService.getTutorProfile(query)
 
     const categories = await categoryAction()
 
@@ -44,7 +38,7 @@ export default async function BrowseTutorsPage({ searchParams }: Props) {
         <div>
             <Header />
             <SearchComp categories={categories.data ?? []} />
-            <BrowsTutor tutors={tutors ?? []} />
+            <BrowsTutor tutors={tutors.data ?? []} />
         </div>
     );
 }

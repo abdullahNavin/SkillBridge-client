@@ -48,6 +48,7 @@ export default function SearchComp({ categories }: { categories: Category[] }) {
 
                     <Button
                         onClick={handleFilter}
+
                         variant="outline"
                         className="
                             group relative overflow-hidden
@@ -64,12 +65,11 @@ export default function SearchComp({ categories }: { categories: Category[] }) {
                             cursor-pointer"
                     >
                         <span
-                            className="
-                                    absolute inset-0 -translate-x-full
+                            className="absolute inset-0 -translate-x-full
                                     bg-gradient-to-r from-transparent via-white/20 to-transparent
                                     group-hover:translate-x-full
                                     transition-transform duration-700 ease-in-out
-                                    pointer-events-none"
+                                    pointer-events-none "
                         />
 
 
@@ -84,7 +84,7 @@ export default function SearchComp({ categories }: { categories: Category[] }) {
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                className="transition-transform duration-300 group-hover:scale-110"
+                                className={"transition-transform duration-300 group-hover:scale-110 "}
                             >
                                 <circle cx="11" cy="11" r="8" />
                                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
