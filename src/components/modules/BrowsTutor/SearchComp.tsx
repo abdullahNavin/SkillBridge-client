@@ -38,19 +38,21 @@ export default function SearchComp({ categories }: { categories: Category[] }) {
         <div className=" my-8 dark:bg-[#151515] bg-gray-300">
             <div className="container mx-auto rounded-xl py-4 px-4">
                 <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                    <input type="text" className="px-4 py-1.5 rounded-2xl border border-gray-600 outline-none dark:bg-[#151515] dark:text-white mb-6 md:mb-0 w-[60%] md:w-[40%] focus:w-[72%] md:focus:w-[50%] duration-500" placeholder="Search tutors..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <input type="text" className="px-4 py-1.5 rounded-2xl border border-gray-600 outline-none dark:bg-[#151515] dark:text-white mb-6 md:mb-0 w-[70%] md:w-[40%] focus:w-[72%] md:focus:w-[50%] duration-500" placeholder="Search tutors..." value={search} onChange={(e) => setSearch(e.target.value)} />
 
                     <SelectCategory categories={categories} setCategory={setCategory} />
                     <SelectRating setRating={setRating} />
                     <SelectPrice setPrice={setPrice} />
 
-                    {/* <Button onClick={handleFilter} variant={"outline"} className="px-4 hover:bg-[#151515] dark:hover:bg-gray-700 cursor-pointer py-2 rounded-lg">Search</Button> */}
 
+                </div>
+                <div className="flex justify-center mt-6">
                     <Button
                         onClick={handleFilter}
 
                         variant="outline"
                         className="
+                        w-[70%] md:w-1/3
                             group relative overflow-hidden
                             px-6 py-2.5 rounded-lg
                             border border-zinc-300 dark:border-zinc-600
@@ -58,8 +60,8 @@ export default function SearchComp({ categories }: { categories: Category[] }) {
                             text-zinc-800 dark:text-zinc-100
                             font-medium tracking-wide text-sm
                             shadow-sm
-                            transition-all duration-300 ease-out
-                            hover:border-zinc-800 dark:hover:border-zinc-300
+                            transition-all duration-500 ease-out
+                            hover:border-zinc-800 dark:hover:border-zinc-900
                             hover:shadow-md hover:-translate-y-0.5
                             active:translate-y-0 active:shadow-sm
                             cursor-pointer"
@@ -92,7 +94,6 @@ export default function SearchComp({ categories }: { categories: Category[] }) {
                             Search
                         </span>
                     </Button>
-
                 </div>
             </div>
         </div>
