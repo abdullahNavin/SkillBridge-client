@@ -1,6 +1,5 @@
 "use client"
 
-import { categoryAction } from "@/actions/category.action"
 import {
     Select,
     SelectContent,
@@ -17,10 +16,12 @@ interface Category {
     description: string
 }
 
-export async function SelectCategory({ setCategory }: { setCategory: (category: string) => void }) {
+export function SelectCategory({ setCategory, categories }: { setCategory: (category: string) => void, categories: Category[] }) {
 
-    const categories = await categoryAction()
-    console.log(categories);
+    // console.log(categories);
+    const allOption = { id: " ", name: "All Categories", description: "" }
+    categories = [allOption, ...categories]
+
     return (
         <Select onValueChange={(value) => setCategory(value)}>
             <SelectTrigger className="w-[70%] md:max-w-48">
@@ -30,8 +31,8 @@ export async function SelectCategory({ setCategory }: { setCategory: (category: 
                 <SelectGroup>
                     <SelectLabel>Categories</SelectLabel>
                     {
-                        categories.data?.map((category: Category) => (
-                            <SelectItem key={category.id} value={category.name}>{category.name}</SelectItem>
+                        categories.map((category: Category) => (
+                            <SelectItem key={category.id} value={category.id}>{category.name}</SelectItem>
                         ))
                     }
                 </SelectGroup>
