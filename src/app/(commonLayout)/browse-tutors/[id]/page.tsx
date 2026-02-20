@@ -9,7 +9,7 @@ export default async function TutorProfile({ params }: { params: Promise<{ id: s
     console.log(tutorDetails);
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto px-2.5 md:px-0">
             <TutorProfileDetails tutorDetails={tutorDetails.data} />
         </div>
     );
