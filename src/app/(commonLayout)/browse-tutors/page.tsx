@@ -3,7 +3,6 @@ import BrowsTutor from "@/components/modules/BrowsTutor/BrowsTutor";
 import Header from "@/components/modules/BrowsTutor/Header";
 import SearchComp from "@/components/modules/BrowsTutor/SearchComp";
 import { tutorProfileService } from "@/components/service/tutorProfile.service";
-import { env } from "@/env";
 
 interface Props {
     searchParams: Promise<{
@@ -30,7 +29,7 @@ export default async function BrowseTutorsPage({ searchParams }: Props) {
     if (price) query.set("price", price)
     if (rating) query.set("rating", rating)
 
-    const tutors = await tutorProfileService.getTutorProfile(query)
+    const tutors = await tutorProfileService.getTutors(query)
 
     const categories = await categoryAction()
 

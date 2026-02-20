@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface Tutor {
     id: string;
@@ -117,7 +118,7 @@ export default function BrowsTutor({ tutors }: { tutors: Tutor[] }) {
                                 <p className="font-medium text-2xl">${tutor.hourlyRate}<span className="text-sm text-muted-foreground">/hour</span></p>
 
                                 <Button variant="outline" className="ml-auto cursor-pointer">
-                                    View Profile
+                                    <Link href={`browse-tutors/${tutor.userId}`}>View Profile</Link>
                                 </Button>
                             </CardFooter>
                         </Card>
