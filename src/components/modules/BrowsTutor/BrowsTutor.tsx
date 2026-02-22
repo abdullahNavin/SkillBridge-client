@@ -19,6 +19,8 @@ export interface Tutor {
     availability: string[];
     subjects: string[];
     isAvailable: boolean;
+    bookings: [];
+    reviews: []
 }
 
 

@@ -4,7 +4,10 @@ export const tutorProfileService = {
     getTutors: async (query: URLSearchParams) => {
         try {
             const res = await fetch(`${env.API_URL}/tutor?${query}`, {
-                cache: "no-cache"
+                // cache: "no-cache"
+                next: {
+                    revalidate: 60
+                }
             })
 
             if (!res.ok) {
@@ -23,7 +26,7 @@ export const tutorProfileService = {
         try {
             const res = await fetch(`${env.API_URL}/tutor/profile/${id}`, {
                 next: {
-                    revalidate: 300
+                    revalidate: 60
                 }
             })
 
