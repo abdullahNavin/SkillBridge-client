@@ -5,13 +5,36 @@ import { Tutor } from "../BrowsTutor/BrowsTutor";
 import { Calendar } from "@/components/ui/calendar";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor }) {
 
     const [date, setDate] = React.useState<Date | undefined>(new Date())
+    const [duration, setDuration] = useState('30 min')
+    const [time, setTime] = useState('')
 
-    // const getDate = new Date(date)
-    // console.log(getDate);
+    if (!date) return;
+    const bookingDate = new Date(date);
+    const t = new Date(time);
+
+    bookingDate.setHours(t.getHours(), t.getMinutes(), 0, 0);
+
+    const bookingEnd = new Date(bookingDate);
+
+    bookingEnd.setMinutes(
+        bookingEnd.getMinutes() + (duration === "30 min" ? 30 : 60)
+    );
+
+    const timeAndDate = bookingDate.toLocaleString('en-US', {
+        month: "short",
+        day: "2-digit",
+        hour: '2-digit'
+    })
+
+    const start = bookingDate.toISOString()
+    const end = bookingEnd.toISOString()
+    console.log(start, end);
+
     return (
         <div className="w-full md:w-87">
             <Card>
@@ -41,9 +64,13 @@ export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor 
                             <div className="grid grid-cols-2 gap-2">
                                 {
                                     tutorDetails.availability.map((slot, inx) => (
-                                        <Button variant={"outline"} key={inx}>{new Date(slot).toLocaleTimeString("en-US", {
-                                            hour: "2-digit"
-                                        })}</Button>
+                                        <Button onClick={() => setTime(slot)}
+                                            variant={time === slot ? "default" : "outline"}
+                                            key={inx}>
+                                            {new Date(slot).toLocaleTimeString("en-US", {
+                                                hour: "2-digit"
+                                            })}
+                                        </Button>
                                     ))
                                 }
                             </div>
@@ -53,9 +80,13 @@ export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor 
                         <div>
                             <h1 className="text-muted-foreground my-4 font-medium uppercase">2. select duration</h1>
                             <div className="grid grid-cols-2 gap-2">
-                                <Button variant={"outline"}>30 min</Button>
-                                <Button variant={"outline"}>60 min</Button>
+                                <Button onClick={() => setDuration('30 min')} variant={duration === "30 min" ? "default" : "outline"}>30 min</Button>
+
+                                <Button onClick={() => setDuration('60 min')} variant={duration === "60 min" ? "default" : "outline"}>60 min</Button>
                             </div>
+                        </div>
+                        <div className="my-5 w-full">
+                            <Button className="w-full cursor-pointer">Book Now - {time && timeAndDate} <ArrowRight /></Button>
                         </div>
                     </div>
                 </CardContent>
