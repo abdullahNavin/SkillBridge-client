@@ -3,15 +3,18 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tutor } from "../BrowsTutor/BrowsTutor";
 import { Calendar } from "@/components/ui/calendar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { BookingType } from "@/components/service/booking.service";
+import { createBooking } from "@/actions/booking.action";
 
 export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor }) {
 
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     const [duration, setDuration] = useState('30 min')
     const [time, setTime] = useState('')
+
 
     if (!date) return;
     const bookingDate = new Date(date);
@@ -33,7 +36,17 @@ export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor 
 
     const start = bookingDate.toISOString()
     const end = bookingEnd.toISOString()
-    console.log(start, end);
+    // console.log(start, end);
+
+    const handleBooking = async () => {
+        const bookingData: BookingType = {
+            tutorProfileId: tutorDetails.id,
+            schedule_start: start,
+            schedule_end: end
+        }
+        const res = await createBooking(bookingData)
+        console.log(res);
+    }
 
     return (
         <div className="w-full md:w-87">
@@ -86,7 +99,7 @@ export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor 
                             </div>
                         </div>
                         <div className="my-5 w-full">
-                            <Button className="w-full cursor-pointer">Book Now - {time && timeAndDate} <ArrowRight /></Button>
+                            <Button onClick={handleBooking} className="w-full cursor-pointer">Book Now - {time && timeAndDate} <ArrowRight /></Button>
                         </div>
                     </div>
                 </CardContent>
