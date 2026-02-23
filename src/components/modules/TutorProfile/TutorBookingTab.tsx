@@ -3,17 +3,20 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tutor } from "../BrowsTutor/BrowsTutor";
 import { Calendar } from "@/components/ui/calendar";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { BookingType } from "@/components/service/booking.service";
 import { createBooking } from "@/actions/booking.action";
+import { redirect } from "next/navigation";
+import { Session } from "better-auth";
+import { toast } from "sonner";
 
-export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor }) {
+export default function TutorBookingTab({ tutorDetails, session }: { tutorDetails: Tutor, session: Session | null }) {
 
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     const [duration, setDuration] = useState('30 min')
-    const [time, setTime] = useState('')
+    const [time, setTime] = useState(tutorDetails.availability[0])
 
 
     if (!date) return;
@@ -44,8 +47,18 @@ export default function TutorBookingTab({ tutorDetails }: { tutorDetails: Tutor 
             schedule_start: start,
             schedule_end: end
         }
+
+        if (!session) {
+            return redirect("/login")
+        }
+
         const res = await createBooking(bookingData)
-        console.log(res);
+        if (res.error) {
+            toast.error(res.error.message)
+        } else {
+            toast.success("Booking created successfully")
+            redirect("/")
+        }
     }
 
     return (
