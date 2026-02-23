@@ -9,9 +9,9 @@ export default function TutorProfileDetails({ tutorDetails }: { tutorDetails: Tu
     return (
         <div>
             <TutorProfileHeader tutorDetails={tutorDetails} />
-            <div className="flex flex-wrap">
+            <div className="flex flex-col md:flex-row gap-5">
                 <TutorProfileTab tutorDetails={tutorDetails} />
-                <TutorBookingTab />
+                <TutorBookingTab tutorDetails={tutorDetails} />
             </div>
         </div>
     );

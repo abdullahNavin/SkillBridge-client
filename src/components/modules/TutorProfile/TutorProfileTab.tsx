@@ -38,9 +38,9 @@ export default function TutorProfileTab({ tutorDetails }: { tutorDetails: Tutor 
                                 ))
                             }
                         </div>
-                        <div>
+                        <div className="bg-[#151515] px-4 pb-2 rounded-xl">
 
-                            <h1 className="font-bold text-xl my-10">Reviews</h1>
+                            <h1 className="font-bold text-xl my-8 pt-2">Reviews</h1>
                             {
                                 tutorDetails.reviews.slice(0, 1).map((review: Review, index) => (
 
@@ -90,7 +90,7 @@ export default function TutorProfileTab({ tutorDetails }: { tutorDetails: Tutor 
                         tutorDetails.reviews.map((review: Review, index) => (
 
 
-                            <div key={index}>
+                            <div className="bg-[#151515] px-4 py-5 rounded-xl mb-3" key={index}>
                                 <div className="flex gap-2">
                                     <Image
                                         src={review.studentImg || "/profile.jpg"}
