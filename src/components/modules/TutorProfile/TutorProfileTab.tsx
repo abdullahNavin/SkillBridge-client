@@ -42,7 +42,7 @@ export default function TutorProfileTab({ tutorDetails }: { tutorDetails: Tutor 
 
                             <h1 className="font-bold text-xl my-8 pt-2">Reviews</h1>
                             {
-                                tutorDetails.reviews.slice(0, 1).map((review: Review, index) => (
+                                tutorDetails.reviews.length > 0 ? tutorDetails.reviews.slice(0, 1).map((review: Review, index) => (
 
                                     <div key={index}>
                                         <div className="flex gap-2">
@@ -69,6 +69,8 @@ export default function TutorProfileTab({ tutorDetails }: { tutorDetails: Tutor 
                                         <div className="border-b border-gray-700 my-4"></div>
                                     </div>
                                 ))
+                                    :
+                                    <p className=" text-2xl text-center pb-4">Now reviews yet</p>
                             }
 
                         </div>
@@ -87,8 +89,7 @@ export default function TutorProfileTab({ tutorDetails }: { tutorDetails: Tutor 
                 <TabsContent value="reviews">
                     <h1 className="font-bold text-xl my-10">Reviews</h1>
                     {
-                        tutorDetails.reviews.map((review: Review, index) => (
-
+                        tutorDetails.reviews.length > 0 ? tutorDetails.reviews.map((review: Review, index) => (
 
                             <div className="bg-[#151515] px-4 py-5 rounded-xl mb-3" key={index}>
                                 <div className="flex gap-2">
@@ -115,6 +116,8 @@ export default function TutorProfileTab({ tutorDetails }: { tutorDetails: Tutor 
                                 <div className="border-b border-gray-700 my-4"></div>
                             </div>
                         ))
+                            :
+                            <p className=" text-2xl text-center">Now reviews yet</p>
                     }
                 </TabsContent>
             </Tabs>

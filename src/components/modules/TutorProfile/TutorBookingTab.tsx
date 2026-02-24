@@ -57,7 +57,7 @@ export default function TutorBookingTab({ tutorDetails, session }: { tutorDetail
             toast.error(res.error.message)
         } else {
             toast.success("Booking created successfully")
-            redirect("/")
+            redirect("/browse-tutors")
         }
     }
 

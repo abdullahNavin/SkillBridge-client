@@ -85,7 +85,7 @@ const Navbar1 = ({
     },
     {
       title: "Dashboard",
-      url: "/dashboard"
+      url: "/student-dashboard"
     }
   ],
   auth = {
