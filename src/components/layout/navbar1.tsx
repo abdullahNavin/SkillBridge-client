@@ -37,8 +37,9 @@ const ModeToggle = dynamic(
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { Session } from "better-auth";
+import { User } from "better-auth";
 import { useRouter } from "next/navigation";
+import { UserRole } from "@/constant/userRole";
 
 interface MenuItem {
   title: string;
@@ -57,7 +58,7 @@ interface Navbar1Props {
     className?: string;
   };
   menu?: MenuItem[];
-  session: Session | null;
+  session: (User & { role: string }) | null
   auth?: {
     login: {
       title: string;
@@ -70,6 +71,8 @@ interface Navbar1Props {
   };
 }
 
+
+
 const Navbar1 = ({
   logo = {
     url: "/",
@@ -77,17 +80,6 @@ const Navbar1 = ({
     alt: "logo",
     // title: "Skill Bridge",
   },
-  menu = [
-    { title: "Home", url: "/" },
-    {
-      title: "Browse Tutors",
-      url: "/browse-tutors",
-    },
-    {
-      title: "Dashboard",
-      url: "/student-dashboard"
-    }
-  ],
   auth = {
     login: { title: "Login", url: "/login" },
     signup: { title: "Sign up", url: "/signup" },
@@ -96,7 +88,36 @@ const Navbar1 = ({
   className,
 }: Navbar1Props) => {
 
-  // console.log(session);
+  let route;
+  switch (session?.role) {
+    case UserRole.student:
+      route = '/student-dashboard'
+      break;
+
+    case UserRole.tutor:
+      route = '/tutor-dashboard'
+      break;
+
+    case UserRole.admin:
+      route = '/admin-dashboard'
+      break;
+
+    default:
+      route = '/login'
+      break;
+  }
+
+  const menu = [
+    { title: "Home", url: "/" },
+    {
+      title: "Browse Tutors",
+      url: "/browse-tutors",
+    },
+    {
+      title: "Dashboard",
+      url: route
+    }
+  ]
 
   const router = useRouter()
 

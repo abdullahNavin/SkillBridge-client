@@ -1,7 +1,5 @@
 import * as React from "react"
 
-import { SearchForm } from "@/components/search-form"
-import { VersionSwitcher } from "@/components/version-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -15,43 +13,48 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import Image from "next/image"
+import { RouteType, studentRoutes } from "@/routes/studentRoutes"
+import { UserRole } from "@/constant/userRole"
+import { tutorRoutes } from "@/routes/tutorRoutes"
+import { adminRoutes } from "@/routes/adminRoutes"
 
-// This is sample data.
-const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-  navMain: [
-    {
-      title: "Build Your Application",
-      url: "#",
-      items: [
-        {
-          title: "Routing",
-          url: "#",
-        },
-        {
-          title: "Data Fetching",
-          url: "#",
-          isActive: true,
-        },
-        {
-          title: "Rendering",
-          url: "#",
-        }
-      ],
-    },
-  ],
-}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  let routes: RouteType[] = []
+
+  switch (props.role) {
+    case UserRole.student:
+      routes = studentRoutes
+      break;
+    case UserRole.tutor:
+      routes = tutorRoutes
+      break;
+    case UserRole.admin:
+      routes = adminRoutes
+      break;
+
+    default:
+      routes = []
+      break;
+  }
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <h1>sidebar header</h1>
+        <div className="flex gap-1.5 px-2">
+          <Image
+            src={'/logo2.png'}
+            alt="logo"
+            height={30}
+            width={30}
+          />
+          <h1>SkillBridge</h1>
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
+        {routes.map((item) => (
           <SidebarGroup key={item.title}>
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
