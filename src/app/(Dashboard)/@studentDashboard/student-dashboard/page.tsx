@@ -1,8 +1,5 @@
 import { BookingCard } from "@/components/layout/BookingCard";
 import { bookingService } from "@/components/service/booking.service";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
 
 export interface BookingType2 {
     id: string
@@ -98,7 +95,6 @@ export default async function studentDashboard() {
                         completedSession.slice(0, 2).map((session: BookingType2) => (
                             <BookingCard key={session.id} session={session}></BookingCard>
                         ))
-                        // < Button > view History</Button>
                         :
                         <p className="text-xl font-medium text-center my-2 mb-8">No session avilable</p>
                 }

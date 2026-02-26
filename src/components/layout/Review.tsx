@@ -40,8 +40,6 @@ export function Review({ session }: { session: BookingType2 }) {
             rating,
         }
 
-        // console.log(reviewData)
-
         const res = await reviewAction(reviewData)
 
         if (res.error) {
@@ -67,26 +65,24 @@ export function Review({ session }: { session: BookingType2 }) {
                 <form onSubmit={handleReview}>
                     <DialogHeader>
                         <DialogTitle>Leave a Review</DialogTitle>
-                        <DialogDescription>
-                            <div className="flex items-center gap-3 p-2 rounded-xl shadow-sm bg-[#151515]">
-                                <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
-                                    <Image
-                                        src={session.tutorImg}
-                                        alt={session.tutorName}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-sm font-semibold">
-                                        {session.tutorName}
-                                    </span>
-                                    <span className="text-xs text-gray-400">
-                                        {session.tutorQualification}
-                                    </span>
-                                </div>
+                        <div className="flex items-center gap-3 p-2 rounded-xl shadow-sm bg-[#151515]">
+                            <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+                                <Image
+                                    src={session.tutorImg}
+                                    alt={session.tutorName}
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
-                        </DialogDescription>
+                            <div className="flex flex-col">
+                                <span className="text-sm font-semibold">
+                                    {session.tutorName}
+                                </span>
+                                <span className="text-xs text-gray-400">
+                                    {session.tutorQualification}
+                                </span>
+                            </div>
+                        </div>
                     </DialogHeader>
 
                     <FieldGroup className="mt-4">
