@@ -87,7 +87,7 @@ export function BookingCard({ session }: { session: BookingType2 }) {
                          text-zinc-800 dark:text-zinc-200">
                                         Start:
                                     </span>{" "}
-                                    {format(startTime, "PPP p")}
+                                    {format(startTime, "MMM d, yy h:mm a")}
                                 </p>
 
                                 <p>
@@ -95,7 +95,8 @@ export function BookingCard({ session }: { session: BookingType2 }) {
                          text-zinc-800 dark:text-zinc-200">
                                         End:
                                     </span>{" "}
-                                    {format(new Date(session.schedule_end), "PPP p")}
+                                    {/* {format(new Date(session.schedule_end), "PPP p")} */}
+                                    {format(new Date(session.schedule_end), "MMM d, yy h:mm a")}
                                 </p>
 
                             </div>
