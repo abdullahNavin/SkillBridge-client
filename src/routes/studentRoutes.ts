@@ -5,7 +5,6 @@ export interface RouteType {
     items: {
         title: string
         url: string
-        isActive?: boolean
     }[]
 }
 
@@ -21,7 +20,6 @@ export const studentRoutes: RouteType[] = [
             {
                 title: "My Session",
                 url: "/student-dashboard/session",
-                isActive: true,
             },
             {
                 title: "My Profile",

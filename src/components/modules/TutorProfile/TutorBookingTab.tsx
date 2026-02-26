@@ -43,6 +43,9 @@ export default function TutorBookingTab({ tutorDetails, session }: { tutorDetail
 
     const handleBooking = async () => {
         const bookingData: BookingType = {
+            tutorImg: tutorDetails.image ?? '/profile.jpg',
+            tutorQualification: tutorDetails.qualifications,
+            tutorName: tutorDetails.name,
             tutorProfileId: tutorDetails.id,
             schedule_start: start,
             schedule_end: end

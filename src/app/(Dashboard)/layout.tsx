@@ -56,7 +56,7 @@ export default async function dashboardLayout({
                     </div>
                 </header>
                 <div className="flex flex-1 p-4">
-                    <div className="bg-muted/50 min-h-screen flex-1 rounded-xl md:min-h-min" >
+                    <div className="bg-muted/50 min-h-screen flex-1 rounded-xl md:min-h-min p-2.5" >
                         {dashboard}
                     </div>
                 </div>
