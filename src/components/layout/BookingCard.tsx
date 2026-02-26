@@ -76,7 +76,7 @@ export function BookingCard({ session }: { session: BookingType2 }) {
                     {
                         session.status === BookingStatus.COMPLETED ?
 
-                            <Review />
+                            <Review session={session} />
 
                             :
                             <div className="text-sm space-y-1 
