@@ -6,7 +6,6 @@ import { Button } from "../ui/button"
 import { Review } from "./Review"
 
 
-
 enum BookingStatus {
     PENDING = "PENDING",
     CONFIRMED = "CONFIRMED",
@@ -16,20 +15,20 @@ enum BookingStatus {
 
 
 
-const getStatusColor = (status: BookingStatus) => {
-    switch (status) {
-        case BookingStatus.PENDING:
-            return "bg-yellow-100 text-yellow-700"
-        case BookingStatus.CONFIRMED:
-            return "bg-green-100 text-green-700"
-        case BookingStatus.CANCELLED:
-            return "bg-red-100 text-red-700"
-        case BookingStatus.COMPLETED:
-            return "bg-blue-100 text-blue-700"
-        default:
-            return ""
-    }
-}
+// const getStatusColor = (status: BookingStatus) => {
+//     switch (status) {
+//         case BookingStatus.PENDING:
+//             return "bg-yellow-100 text-yellow-700"
+//         case BookingStatus.CONFIRMED:
+//             return "bg-green-100 text-green-700"
+//         case BookingStatus.CANCELLED:
+//             return "bg-red-100 text-red-700"
+//         case BookingStatus.COMPLETED:
+//             return "bg-blue-100 text-blue-700"
+//         default:
+//             return ""
+//     }
+// }
 
 export function BookingCard({ session }: { session: BookingType2 }) {
     const now = new Date()
