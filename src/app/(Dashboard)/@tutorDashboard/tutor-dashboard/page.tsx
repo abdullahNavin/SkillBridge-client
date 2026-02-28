@@ -25,17 +25,17 @@ enum BookingStatus {
 }
 
 export default async function TutorDashboard() {
-    const res = await tutorProfileService.getTutorDashboard()
+    const { data = [], error } = await tutorProfileService.getTutorDashboard()
 
-    if (res.error) {
-        return toast.error(res.error)
+    if (error) {
+        return toast.error(error)
     }
-    if (res.data?.message) {
-        return toast.warning(res.data?.message)
+    if (data?.message) {
+        return toast.warning(data?.message)
     }
-    const upcommingSession = res.data.bookings.filter((session: BookingType2) => session.status !== BookingStatus.COMPLETED)
+    const upcommingSession = data?.bookings.filter((session: BookingType2) => session.status !== BookingStatus.COMPLETED) || []
 
-    const completedSession = res.data.bookings.filter((session: BookingType2) => session.status === BookingStatus.COMPLETED)
+    const completedSession = data?.bookings.filter((session: BookingType2) => session.status === BookingStatus.COMPLETED) || []
 
 
     return (
@@ -53,7 +53,7 @@ export default async function TutorDashboard() {
                             </div>
                             <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">Total Sessions</span>
                         </div>
-                        <p className="text-4xl font-bold text-white">{res.data.bookings.length}</p>
+                        <p className="text-4xl font-bold text-white">{data?.bookings?.length}</p>
                         <p className="mt-1 text-xs text-slate-500">All time</p>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ export default async function TutorDashboard() {
                             </div>
                             <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">Total Review</span>
                         </div>
-                        <p className="text-4xl font-bold text-white">{res.data.reviews.length}</p>
+                        <p className="text-4xl font-bold text-white">{data?.reviews?.length}</p>
                         <p className="mt-1 text-xs text-slate-500">All time</p>
                     </div>
                 </div>
@@ -92,11 +92,11 @@ export default async function TutorDashboard() {
                             <div className="h-1.5 flex-1 rounded-full bg-slate-700">
                                 <div
                                     className="h-1.5 rounded-full bg-emerald-400 transition-all"
-                                    style={{ width: `${res.data.bookings.length ? (completedSession.length / res.data.bookings.length) * 100 : 0}%` }}
+                                    style={{ width: `${data?.bookings?.length ? (completedSession.length / data?.bookings.length) * 100 : 0}%` }}
                                 />
                             </div>
                             <span className="text-xs text-emerald-400 font-medium">
-                                {res.data.bookings.length ? Math.round((completedSession.length / res.data.bookings.length) * 100) : 0}%
+                                {data?.bookings.length ? Math.round((completedSession.length / data?.bookings.length) * 100) : 0}%
                             </span>
                         </div>
                     </div>

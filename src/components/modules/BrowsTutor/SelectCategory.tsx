@@ -10,7 +10,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-interface Category {
+export interface Category {
     id: string
     name: string
     description: string
@@ -21,6 +21,7 @@ export function SelectCategory({ setCategory, categories }: { setCategory: (cate
     // console.log(categories);
     const allOption = { id: " ", name: "All Categories", description: "" }
     categories = [allOption, ...categories]
+
 
     return (
         <Select onValueChange={(value) => setCategory(value)}>

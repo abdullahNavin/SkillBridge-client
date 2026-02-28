@@ -1,5 +1,6 @@
 "use client"
 
+import { createTutorProfile } from "@/actions/tutorProfileData.action"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -15,6 +16,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { UserRole } from "@/constant/userRole"
 import { env } from "@/env"
 import { authClient } from "@/lib/auth-client"
 import Link from "next/link"
@@ -51,20 +53,36 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
         email: data.email,
         password: data.password,
         role,
-        // callbackURL: FrontendUrl || "http://localhost:3000",
-      } as unknown as Parameters<typeof authClient.signUp.email>[0])
+      } as Parameters<typeof authClient.signUp.email>[0])
 
       if (error) {
         toast.error(`Signup failed: ${error.message}`)
+        return
       }
 
-      if (userData?.user.email) {
-        toast.success("Account created successfully!")
-        reset()
-        router.push("/")
+      if (!userData?.user) {
+        toast.error("User creation failed.")
+        return
       }
+
+      if (role === UserRole.tutor) {
+        const res = await createTutorProfile({
+          name: data.name,
+          userId: userData.user.id,
+        })
+        console.log(res); //null
+        if (!res.data?.id) {
+          toast.error("Failed to create tutor profile.")
+          return
+        }
+      }
+
+      toast.success("Account created successfully!")
+      reset()
+      router.push("/")
     } catch (err) {
       console.error("Signup failed:", err)
+      toast.error("Something went wrong. Please try again.")
     }
   }
 
@@ -74,6 +92,7 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
         provider: "google",
         callbackURL: FrontendUrl ?? "http://localhost:3000"
       })
+
     } catch (err) {
       console.error("Google login failed:", err)
     }

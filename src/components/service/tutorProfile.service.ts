@@ -1,5 +1,8 @@
 import { env } from "@/env"
 import { cookies } from "next/headers"
+import { PayloadType } from "../modules/TutorProfile/TutorProfile"
+
+
 
 export const tutorProfileService = {
     getTutors: async (query: URLSearchParams) => {
@@ -53,6 +56,62 @@ export const tutorProfileService = {
 
         } catch (error) {
             return { data: null, error: "Failed to fetch tutor profile" }
+        }
+    },
+
+    updateTutorProfile: async (profileData: PayloadType) => {
+        try {
+            console.log(profileData);
+            const cookieStore = await cookies()
+            const res = await fetch(`${env.API_URL}/tutor/update`, {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString()
+                },
+                body: JSON.stringify(profileData)
+            })
+            const data = await res.json()
+
+            // console.log(data);
+
+            if (data.error) {
+                return {
+                    data: null,
+                    error: data?.error?.message,
+                };
+            }
+            return { data, error: null }
+
+        } catch (error) {
+            return { data: null, error: "Failed to update tutor profile" }
+        }
+    },
+    createTutorProfile: async (Profiledata: { name: string, userId: string }) => {
+        try {
+            const cookieStore = await cookies()
+            const res = await fetch(`${env.API_URL}/tutor/profile`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString()
+                },
+                body: JSON.stringify(Profiledata)
+            })
+
+            const data = await res.json()
+
+            if (data.error) {
+                return {
+                    data: null,
+                    error: data?.error?.message,
+                };
+            }
+            return { data, error: null }
+
+        } catch (error) {
+            return { data: null, error: "Failed to Create tutor profile" }
+
         }
     }
 }

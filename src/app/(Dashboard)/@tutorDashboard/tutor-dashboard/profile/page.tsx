@@ -1,4 +1,5 @@
 import TutorProfileEditForm from "@/components/modules/TutorProfile/TutorProfile";
+import { categoryService } from "@/components/service/category.service";
 import { tutorProfileService } from "@/components/service/tutorProfile.service";
 import { toast } from "sonner";
 
@@ -11,10 +12,12 @@ export default async function TutorProfilePage() {
     if (res.data?.message) {
         return toast.warning(res.data?.message)
     }
-    // console.log(res.data);
+
+    const category = await categoryService.getCategories()
+
     return (
         <div>
-            <TutorProfileEditForm />
+            <TutorProfileEditForm categories={category.data} tutorData={res.data} />
         </div>
     );
 }

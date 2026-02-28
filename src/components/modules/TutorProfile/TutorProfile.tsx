@@ -34,6 +34,8 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { updateTutorProfile } from "@/actions/updateTutorProfile.action";
+import { Category } from "../BrowsTutor/SelectCategory";
 
 // ── Schema ──────────────────────────────────────────────────────────────────
 const formSchema = z.object({
@@ -48,9 +50,41 @@ const formSchema = z.object({
         time: z.string().min(1, "Pick a time"),
     })).optional(),
     isAvailable: z.boolean(),
+    category_id: z.string().min(1, "Please select a category"),
+    image: z.string().url("Enter a valid URL").optional().or(z.literal("")),
 });
 
 type FormValues = z.infer<typeof formSchema>;
+
+export interface Tutor {
+    id: string;
+    category_id: string;
+    bio: string;
+    name: string;
+    image: string | null;
+    rating: number;
+    totalReviews: number;
+    userId: string;
+    yearsOfExperience: number;
+    hourlyRate: string; // kept as string since provided that way
+    qualifications: string;
+    availability: string[]; // ISO date strings
+    subjects: string[];
+    isAvailable: boolean;
+}
+
+export type PayloadType = {
+    name: string;
+    bio: string;
+    hourlyRate: string;
+    yearsOfExperience: number;
+    qualifications: string;
+    isAvailable: boolean;
+    subjects: string[];
+    availability: string[];
+    category_id: string;
+    image?: string | null;
+};
 
 // ── Sample times ─────────────────────────────────────────────────────────────
 const TIME_OPTIONS = [
@@ -62,26 +96,26 @@ const TIME_OPTIONS = [
 ];
 
 // ── Default data (from API) ───────────────────────────────────────────────────
-const tutorData = {
-    id: "4e8c9974-283e-48b2-9c47-41dcc6809758",
-    category_id: "d905fb94-58cd-4493-8df7-0badce59e903",
-    bio: "Friendly physics tutor with a knack for breaking down tough concepts into simple steps. I emphasize real-world examples and exam-focused practice.",
-    name: "admin",
-    image: null,
-    rating: 4,
-    totalReviews: 1,
-    userId: "FSuf6VZ5kmaTd2LPwRGLtRF6gTRuzWAg",
-    yearsOfExperience: 4,
-    hourlyRate: "42.5",
-    qualifications: "B.Sc. in Physics, M.Sc. in Applied Physics, TEFL Certified, Certified STEM Tutor",
-    availability: [
-        "2026-03-10T08:30:00.000Z",
-        "2026-03-11T14:00:00.000Z",
-        "2026-03-13T18:15:00.000Z",
-    ],
-    subjects: ["physics", "mechanics", "electromagnetism", "thermodynamics"],
-    isAvailable: false,
-};
+// const tutorData = {
+//     id: "4e8c9974-283e-48b2-9c47-41dcc6809758",
+//     category_id: "d905fb94-58cd-4493-8df7-0badce59e903",
+//     bio: "Friendly physics tutor with a knack for breaking down tough concepts into simple steps. I emphasize real-world examples and exam-focused practice.",
+//     name: "admin",
+//     image: null,
+//     rating: 4,
+//     totalReviews: 1,
+//     userId: "FSuf6VZ5kmaTd2LPwRGLtRF6gTRuzWAg",
+//     yearsOfExperience: 4,
+//     hourlyRate: "42.5",
+//     qualifications: "B.Sc. in Physics, M.Sc. in Applied Physics, TEFL Certified, Certified STEM Tutor",
+//     availability: [
+//         "2026-03-10T08:30:00.000Z",
+//         "2026-03-11T14:00:00.000Z",
+//         "2026-03-13T18:15:00.000Z",
+//     ],
+//     subjects: ["physics", "mechanics", "electromagnetism", "thermodynamics"],
+//     isAvailable: false,
+// };
 
 function parseAvailability(isoStrings: string[]) {
     return isoStrings.map((iso) => {
@@ -91,9 +125,25 @@ function parseAvailability(isoStrings: string[]) {
         return { date: d, time: `${hours}:${mins}` };
     });
 }
+function parseSubjects(subjects: string[]) {
+    return subjects.map((s) => ({ value: s }));
+}
+
+function serializeAvailability(slots: { date: Date; time: string }[]): string[] {
+    return slots.map(({ date, time }) => {
+        const [hours, mins] = time.split(":").map(Number);
+        const d = new Date(date);
+        d.setUTCHours(hours, mins, 0, 0);
+        return d.toISOString();
+    });
+}
+
+function serializeSubjects(subjects: { value: string }[]): string[] {
+    return subjects.map((s) => s.value);
+}
 
 // ── Component ─────────────────────────────────────────────────────────────────
-export default function TutorProfileEditForm() {
+export default function TutorProfileEditForm({ categories, tutorData }: { categories: Category[], tutorData: Tutor }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const form = useForm<FormValues, unknown, FormValues>({
@@ -104,9 +154,11 @@ export default function TutorProfileEditForm() {
             hourlyRate: tutorData.hourlyRate,
             yearsOfExperience: tutorData.yearsOfExperience,
             qualifications: tutorData.qualifications,
-            subjects: tutorData.subjects.map((s) => ({ value: s })),
+            subjects: parseSubjects(tutorData.subjects),
             availability: parseAvailability(tutorData.availability),
             isAvailable: tutorData.isAvailable,
+            category_id: tutorData.category_id,
+            image: tutorData.image ?? "",
         },
     });
 
@@ -120,20 +172,36 @@ export default function TutorProfileEditForm() {
         name: "availability",
     });
 
-    // async function onSubmit(values: FormValues) {
     const onSubmit = async (values: FormValues) => {
         setIsSubmitting(true);
         try {
-            // Replace with actual API call
-            await new Promise((res) => setTimeout(res, 1200));
-            console.log("Submitted:", values);
-            toast.success("Profile updated successfully!");
+            const payload: PayloadType = {
+                name: values.name,
+                bio: values.bio,
+                hourlyRate: values.hourlyRate,
+                yearsOfExperience: Number(values.yearsOfExperience),
+                qualifications: values.qualifications,
+                isAvailable: values.isAvailable,
+                category_id: values.category_id,
+                image: values.image || null,
+                subjects: serializeSubjects(values.subjects),
+                availability: serializeAvailability(values.availability ?? []),
+            };
+            const res = await updateTutorProfile(payload);
+            if (res.data) {
+                return toast.success("Profile updated successfully!");
+            }
+            toast.error("Failed to update profile. Please try again.");
+
         } catch {
             toast.error("Failed to update profile. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
-    }
+    };
+
+    // Watch image URL for live preview
+    const imageUrl = form.watch("image");
 
     return (
         <div className="min-h-screen bg-background py-10 px-4">
@@ -168,6 +236,60 @@ export default function TutorProfileEditForm() {
                                             <FormControl>
                                                 <Input placeholder="Your name" {...field} />
                                             </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {/* Category */}
+                                <FormField
+                                    control={form.control}
+                                    name="category_id"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Category</FormLabel>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Select a category" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    {categories.map((cat) => (
+                                                        <SelectItem key={cat.id} value={cat.id}>
+                                                            {cat.name}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {/* Profile Image URL */}
+                                <FormField
+                                    control={form.control}
+                                    name="image"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Profile Image URL</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="https://example.com/your-photo.jpg"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            {imageUrl && (
+                                                <img
+                                                    src={imageUrl}
+                                                    alt="Profile preview"
+                                                    onError={(e) => (e.currentTarget.style.display = "none")}
+                                                    onLoad={(e) => (e.currentTarget.style.display = "block")}
+                                                    className="mt-2 h-24 w-24 rounded-full object-cover border"
+                                                />
+                                            )}
+                                            <FormDescription>Paste a publicly accessible image URL.</FormDescription>
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -217,7 +339,13 @@ export default function TutorProfileEditForm() {
                                             <FormItem>
                                                 <FormLabel>Years of Experience</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" min={0} max={60} {...field} />
+                                                    <Input
+                                                        type="number"
+                                                        min={0}
+                                                        max={60}
+                                                        {...field}
+                                                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                                                    />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -327,7 +455,7 @@ export default function TutorProfileEditForm() {
                                             control={form.control}
                                             name={`availability.${index}.date`}
                                             render={({ field }) => (
-                                                <FormItem className="flex-1">
+                                                <FormItem className="flex-1 hidden">
                                                     {index === 0 && <FormLabel>Date</FormLabel>}
                                                     <Popover>
                                                         <PopoverTrigger asChild>
@@ -364,7 +492,7 @@ export default function TutorProfileEditForm() {
                                             control={form.control}
                                             name={`availability.${index}.time`}
                                             render={({ field }) => (
-                                                <FormItem className="w-32">
+                                                <FormItem className="w-[70%]">
                                                     {index === 0 && <FormLabel>Time</FormLabel>}
                                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                         <FormControl>

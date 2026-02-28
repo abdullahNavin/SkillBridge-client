@@ -24,9 +24,9 @@ enum BookingStatus {
 
 export default async function studentDashboard() {
     const res = await bookingService.getBooking()
-    const upcommingSession = res.data.filter((session: BookingType2) => session.status !== BookingStatus.COMPLETED)
+    const upcommingSession = res.data?.filter((session: BookingType2) => session.status !== BookingStatus.COMPLETED)
 
-    const completedSession = res.data.filter((session: BookingType2) => session.status === BookingStatus.COMPLETED)
+    const completedSession = res.data?.filter((session: BookingType2) => session.status === BookingStatus.COMPLETED)
 
 
     return (
@@ -44,7 +44,7 @@ export default async function studentDashboard() {
                             </div>
                             <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">Total Sessions</span>
                         </div>
-                        <p className="text-4xl font-bold text-white">{res.data.length}</p>
+                        <p className="text-4xl font-bold text-white">{res.data?.length}</p>
                         <p className="mt-1 text-xs text-slate-500">All time</p>
                     </div>
                 </div>
@@ -61,16 +61,16 @@ export default async function studentDashboard() {
                             </div>
                             <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">Completed</span>
                         </div>
-                        <p className="text-4xl font-bold text-white">{completedSession.length}</p>
+                        <p className="text-4xl font-bold text-white">{completedSession?.length}</p>
                         <div className="mt-2 flex items-center gap-1.5">
                             <div className="h-1.5 flex-1 rounded-full bg-slate-700">
                                 <div
                                     className="h-1.5 rounded-full bg-emerald-400 transition-all"
-                                    style={{ width: `${res.data.length ? (completedSession.length / res.data.length) * 100 : 0}%` }}
+                                    style={{ width: `${res.data?.length ? (completedSession?.length / res.data?.length) * 100 : 0}%` }}
                                 />
                             </div>
                             <span className="text-xs text-emerald-400 font-medium">
-                                {res.data.length ? Math.round((completedSession.length / res.data.length) * 100) : 0}%
+                                {res.data?.length ? Math.round((completedSession?.length / res.data?.length) * 100) : 0}%
                             </span>
                         </div>
                     </div>
@@ -80,7 +80,7 @@ export default async function studentDashboard() {
             <h1 className="text-xl font-bold my-2 mb-8">Upcomming Sessions</h1>
             <div className="flex flex-col gap-3">
                 {
-                    upcommingSession.length > 0 ? upcommingSession.map((session: BookingType2) => (
+                    upcommingSession?.length > 0 ? upcommingSession?.map((session: BookingType2) => (
                         <BookingCard key={session.id} session={session}></BookingCard>
                     ))
                         :
@@ -90,9 +90,9 @@ export default async function studentDashboard() {
             <h1 className="text-xl font-bold my-2 mb-8">Completed Sessions</h1>
             <div className="flex flex-col gap-3">
                 {
-                    completedSession.length > 0
+                    completedSession?.length > 0
                         ?
-                        completedSession.slice(0, 2).map((session: BookingType2) => (
+                        completedSession?.slice(0, 2).map((session: BookingType2) => (
                             <BookingCard key={session.id} session={session}></BookingCard>
                         ))
                         :
