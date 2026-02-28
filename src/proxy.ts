@@ -13,9 +13,9 @@ export const proxy = async (request: NextRequest) => {
 
     if (data) {
         isAuthenticated = true;
-        isAdmin = data.user.role === UserRole.admin
-        isStudent = data.user.role === UserRole.student
-        isTutor = data.user.role === UserRole.tutor
+        isAdmin = data.user?.role === UserRole.admin
+        isStudent = data.user?.role === UserRole.student
+        isTutor = data.user?.role === UserRole.tutor
     }
 
     if (!isAuthenticated) {

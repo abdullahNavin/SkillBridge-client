@@ -6,7 +6,6 @@ export default async function TutorProfile({ params }: { params: Promise<{ id: s
     const { id } = await params
 
     const tutorDetails = await tutorProfileService.getTutorById(id)
-    // console.log('reviews:', tutorDetails.data.reviews);
 
     return (
         <div className="container mx-auto px-2.5 md:px-0">

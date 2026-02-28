@@ -9,10 +9,11 @@ import { ArrowRight } from "lucide-react";
 import { BookingType } from "@/components/service/booking.service";
 import { createBooking } from "@/actions/booking.action";
 import { redirect } from "next/navigation";
-import { Session } from "better-auth";
+import { User } from "better-auth";
 import { toast } from "sonner";
+import { UserRole } from "@/constant/userRole";
 
-export default function TutorBookingTab({ tutorDetails, session }: { tutorDetails: Tutor, session: Session | null }) {
+export default function TutorBookingTab({ tutorDetails, session }: { tutorDetails: Tutor, session: (User & { role: string }) | null }) {
 
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     const [duration, setDuration] = useState('30 min')
@@ -39,7 +40,6 @@ export default function TutorBookingTab({ tutorDetails, session }: { tutorDetail
 
     const start = bookingDate.toISOString()
     const end = bookingEnd.toISOString()
-    // console.log(start, end);
 
     const handleBooking = async () => {
         const bookingData: BookingType = {
@@ -51,14 +51,22 @@ export default function TutorBookingTab({ tutorDetails, session }: { tutorDetail
             schedule_end: end
         }
 
+
         if (!session) {
             return redirect("/login")
         }
 
         const res = await createBooking(bookingData)
+
         if (res.error) {
             toast.error(res.error.message)
-        } else {
+        }
+
+        else if (res.data?.message) {
+            toast.warning(res.data?.message)
+        }
+
+        else {
             toast.success("Booking created successfully")
             redirect("/browse-tutors")
         }
@@ -115,7 +123,7 @@ export default function TutorBookingTab({ tutorDetails, session }: { tutorDetail
                             </div>
                         </div>
                         <div className="my-5 w-full">
-                            <Button onClick={handleBooking} className="w-full cursor-pointer">Book Now - {time && timeAndDate} <ArrowRight /></Button>
+                            <Button disabled={session?.role === UserRole.tutor} onClick={handleBooking} className="w-full cursor-pointer">Book Now - {time && timeAndDate} <ArrowRight /></Button>
                         </div>
                     </div>
                 </CardContent>

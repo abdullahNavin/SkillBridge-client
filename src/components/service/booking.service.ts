@@ -10,6 +10,13 @@ export interface BookingType {
     tutorQualification: string
 }
 
+enum BookingStatus {
+    PENDING = "PENDING",
+    CONFIRMED = "CONFIRMED",
+    CANCELLED = "CANCELLED",
+    COMPLETED = "COMPLETED",
+}
+
 export const bookingService = {
     createBooking: async (bookingData: BookingType) => {
         try {
@@ -53,6 +60,32 @@ export const bookingService = {
                 return {
                     data: null,
                     error: { message: "Error: Post not created." },
+                };
+            }
+            return { data: data, error: null };
+
+        } catch (error) {
+            return { data: null, error: { message: "Something Went Wrong" } };
+        }
+    },
+
+    updateBookingStatus: async (Bookingdata: { status: BookingStatus }, id: string) => {
+        try {
+            const cookieStore = await cookies()
+            const res = await fetch(`${env.API_URL}/booking/update-bookings/${id}`, {
+                method: "PUT",
+                headers: {
+                    Cookie: cookieStore.toString(),
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(Bookingdata)
+            })
+            const data = await res.json()
+
+            if (data.error) {
+                return {
+                    data: null,
+                    error: { message: data.error },
                 };
             }
             return { data: data, error: null };
