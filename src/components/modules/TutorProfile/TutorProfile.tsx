@@ -37,7 +37,6 @@ import { toast } from "sonner";
 import { updateTutorProfile } from "@/actions/updateTutorProfile.action";
 import { Category } from "../BrowsTutor/SelectCategory";
 
-// ── Schema ──────────────────────────────────────────────────────────────────
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
     bio: z.string().min(20, "Bio must be at least 20 characters").max(500, "Bio cannot exceed 500 characters"),
@@ -66,9 +65,9 @@ export interface Tutor {
     totalReviews: number;
     userId: string;
     yearsOfExperience: number;
-    hourlyRate: string; // kept as string since provided that way
+    hourlyRate: string;
     qualifications: string;
-    availability: string[]; // ISO date strings
+    availability: string[];
     subjects: string[];
     isAvailable: boolean;
 }
@@ -86,7 +85,6 @@ export type PayloadType = {
     image?: string | null;
 };
 
-// ── Sample times ─────────────────────────────────────────────────────────────
 const TIME_OPTIONS = [
     "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
     "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
@@ -95,27 +93,6 @@ const TIME_OPTIONS = [
     "20:00", "20:30", "21:00",
 ];
 
-// ── Default data (from API) ───────────────────────────────────────────────────
-// const tutorData = {
-//     id: "4e8c9974-283e-48b2-9c47-41dcc6809758",
-//     category_id: "d905fb94-58cd-4493-8df7-0badce59e903",
-//     bio: "Friendly physics tutor with a knack for breaking down tough concepts into simple steps. I emphasize real-world examples and exam-focused practice.",
-//     name: "admin",
-//     image: null,
-//     rating: 4,
-//     totalReviews: 1,
-//     userId: "FSuf6VZ5kmaTd2LPwRGLtRF6gTRuzWAg",
-//     yearsOfExperience: 4,
-//     hourlyRate: "42.5",
-//     qualifications: "B.Sc. in Physics, M.Sc. in Applied Physics, TEFL Certified, Certified STEM Tutor",
-//     availability: [
-//         "2026-03-10T08:30:00.000Z",
-//         "2026-03-11T14:00:00.000Z",
-//         "2026-03-13T18:15:00.000Z",
-//     ],
-//     subjects: ["physics", "mechanics", "electromagnetism", "thermodynamics"],
-//     isAvailable: false,
-// };
 
 function parseAvailability(isoStrings: string[]) {
     return isoStrings.map((iso) => {
@@ -142,7 +119,7 @@ function serializeSubjects(subjects: { value: string }[]): string[] {
     return subjects.map((s) => s.value);
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// -----
 export default function TutorProfileEditForm({ categories, tutorData }: { categories: Category[], tutorData: Tutor }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -200,14 +177,13 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
         }
     };
 
-    // Watch image URL for live preview
     const imageUrl = form.watch("image");
 
     return (
         <div className="min-h-screen bg-background py-10 px-4">
             <div className="max-w-3xl mx-auto space-y-6">
 
-                {/* Header */}
+
                 <div>
                     <h1 className="text-2xl font-semibold tracking-tight">Edit Tutor Profile</h1>
                     <p className="text-sm text-muted-foreground mt-1">
@@ -218,7 +194,7 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-                        {/* ── Basic Info ── */}
+
                         <Card>
                             <CardHeader>
                                 <CardTitle className="text-base">Basic Information</CardTitle>
@@ -226,7 +202,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                             </CardHeader>
                             <CardContent className="space-y-4">
 
-                                {/* Name */}
                                 <FormField
                                     control={form.control}
                                     name="name"
@@ -241,7 +216,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                     )}
                                 />
 
-                                {/* Category */}
                                 <FormField
                                     control={form.control}
                                     name="category_id"
@@ -267,7 +241,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                     )}
                                 />
 
-                                {/* Profile Image URL */}
                                 <FormField
                                     control={form.control}
                                     name="image"
@@ -295,7 +268,7 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                     )}
                                 />
 
-                                {/* Bio */}
+
                                 <FormField
                                     control={form.control}
                                     name="bio"
@@ -317,7 +290,7 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                     )}
                                 />
 
-                                {/* Hourly Rate + Experience */}
+
                                 <div className="grid grid-cols-2 gap-4">
                                     <FormField
                                         control={form.control}
@@ -353,7 +326,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                     />
                                 </div>
 
-                                {/* Qualifications */}
                                 <FormField
                                     control={form.control}
                                     name="qualifications"
@@ -375,7 +347,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                             </CardContent>
                         </Card>
 
-                        {/* ── Subjects ── */}
                         <Card>
                             <CardHeader>
                                 <CardTitle className="text-base">Subjects</CardTitle>
@@ -440,7 +411,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                             </CardContent>
                         </Card>
 
-                        {/* ── Availability ── */}
                         <Card>
                             <CardHeader>
                                 <CardTitle className="text-base">Availability Slots</CardTitle>
@@ -450,7 +420,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                 {availFields.map((field, index) => (
                                     <div key={field.id} className="flex items-start gap-2">
 
-                                        {/* Date Picker */}
                                         <FormField
                                             control={form.control}
                                             name={`availability.${index}.date`}
@@ -487,7 +456,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                             )}
                                         />
 
-                                        {/* Time Picker */}
                                         <FormField
                                             control={form.control}
                                             name={`availability.${index}.time`}
@@ -511,7 +479,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                             )}
                                         />
 
-                                        {/* Remove */}
                                         <div className={cn("flex items-center", index === 0 ? "mt-6" : "mt-0")}>
                                             <Button
                                                 type="button"
@@ -539,7 +506,6 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                             </CardContent>
                         </Card>
 
-                        {/* ── Availability Toggle ── */}
                         <Card>
                             <CardContent className="pt-6">
                                 <FormField
@@ -572,7 +538,7 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                             <Button type="button" variant="outline" onClick={() => form.reset()}>
                                 Reset
                             </Button>
-                            <Button type="submit" disabled={isSubmitting}>
+                            <Button type="submit" disabled={isSubmitting} className="cursor-pointer">
                                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                 Save Changes
                             </Button>

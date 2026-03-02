@@ -10,13 +10,20 @@ export const adminRoutes: RouteType[] = [
                 url: "/tutor-dashboard",
             },
             {
-                title: "All Session",
-                url: "/tutor-dashboard/session",
-                isActive: true,
+                title: "All Bookings",
+                url: "/tutor-dashboard/bookings"
             },
             {
-                title: "All Tutor",
-                url: "/tutor-dashboard/tutor",
+                title: "All Users",
+                url: "/tutor-dashboard/users",
+            },
+            {
+                title: "Manage Categories",
+                url: "/tutor-dashboard/categories",
+            },
+            {
+                title: "Home",
+                url: "/",
             }
         ],
     },
