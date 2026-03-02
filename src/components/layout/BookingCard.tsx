@@ -30,7 +30,7 @@ enum BookingStatus {
 //     }
 // }
 
-export function BookingCard({ session }: { session: BookingType2 }) {
+export function BookingCard({ session, isAdmin = false }: { session: BookingType2, isAdmin?: boolean }) {
     const now = new Date()
     const startTime = new Date(session.schedule_start)
 
@@ -73,25 +73,22 @@ export function BookingCard({ session }: { session: BookingType2 }) {
 
                     {/* time */}
                     {
-                        session.status === BookingStatus.COMPLETED ?
+                        !isAdmin ? session.status === BookingStatus.COMPLETED ?
 
                             <Review session={session} />
 
                             :
-                            <div className="text-sm space-y-1 
-                    text-zinc-600 dark:text-zinc-400">
+                            <div className="text-sm space-y-1 text-zinc-600 dark:text-zinc-400">
 
                                 <p>
-                                    <span className="font-medium 
-                         text-zinc-800 dark:text-zinc-200">
+                                    <span className="font-medium text-zinc-800 :text-zinc-200">
                                         Start:
                                     </span>{" "}
                                     {format(startTime, "MMM d, yy h:mm a")}
                                 </p>
 
                                 <p>
-                                    <span className="font-medium 
-                         text-zinc-800 dark:text-zinc-200">
+                                    <span className="font-medium text-zinc-800 :text-zinc-200">
                                         End:
                                     </span>{" "}
                                     {/* {format(new Date(session.schedule_end), "PPP p")} */}
@@ -99,6 +96,8 @@ export function BookingCard({ session }: { session: BookingType2 }) {
                                 </p>
 
                             </div>
+                            :
+                            <Button>{session.status}</Button>
                     }
                 </div>
 

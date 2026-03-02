@@ -7,19 +7,19 @@ export const adminRoutes: RouteType[] = [
         items: [
             {
                 title: "Dashboard",
-                url: "/tutor-dashboard",
+                url: "/admin-dashboard",
             },
             {
                 title: "All Bookings",
-                url: "/tutor-dashboard/bookings"
+                url: "/admin-dashboard/bookings"
             },
             {
                 title: "All Users",
-                url: "/tutor-dashboard/users",
+                url: "/admin-dashboard/users",
             },
             {
                 title: "Manage Categories",
-                url: "/tutor-dashboard/categories",
+                url: "/admin-dashboard/categories",
             },
             {
                 title: "Home",

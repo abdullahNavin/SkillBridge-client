@@ -25,5 +25,29 @@ export const adminDashboardService = {
         } catch (error) {
             return { data: null, error: "Failed to fetch Admin Dashboard Data" }
         }
+    },
+    getAllBookings: async () => {
+        try {
+            const cookieStore = await cookies()
+
+            const res = await fetch(`${env.API_URL}/booking`, {
+                headers: {
+                    Cookie: cookieStore.toString()
+                },
+                next: {
+                    revalidate: 60
+                }
+            })
+
+            if (!res.ok) {
+                return { data: null, error: "Failed to fetch all bookings" }
+            }
+
+            const data = await res.json()
+            return { data, error: null }
+
+        } catch (error) {
+            return { data: null, error: "Failed to fetch all bookings" }
+        }
     }
 }
