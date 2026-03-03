@@ -1,3 +1,4 @@
+import UserDeleteBtn from "@/components/modules/Admin/UserDeleteBtn";
 import { adminDashboardService } from "@/components/service/adminDashboard.service";
 import { DeleteIcon, Edit, Edit2, Edit2Icon } from "lucide-react";
 import { MdDelete, MdDeleteForever } from "react-icons/md";
@@ -34,13 +35,15 @@ export default async function Allusers() {
                                 <p className="text-sm ">{user.email}</p>
                             </div>
                             <div className="flex items-center space-x-4">
-                                <span className={`px-2 py-1 rounded-4xl text-sm ${user.role === 'ADMIN' && 'bg-blue-800'} ${user.role === 'STUDENT' && 'bg-green-800'} ${user.role === 'TUTOR' && 'bg-yellow-800'}`}>
+                                <span className={`w-20 text-center px-2 py-1 rounded-4xl text-sm ${user.role === 'ADMIN' && 'bg-blue-800'} ${user.role === 'STUDENT' && 'bg-green-800'} ${user.role === 'TUTOR' && 'bg-yellow-800'}`}>
                                     {user.role}
                                 </span>
-                                <div className="flex items-center space-x-2">
-                                    <Edit className="hover:text-blue-500 cursor-pointer transition duration-300" />
-                                    <MdDelete className="hover:text-red-500 text-2xl transition duration-300 cursor-pointer" />
-                                </div>
+                                {
+                                    user.role !== "ADMIN" && <div className="flex items-center space-x-2">
+                                        <Edit className="hover:text-blue-500 cursor-pointer transition duration-300" />
+                                        <UserDeleteBtn userId={user.id} />
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>

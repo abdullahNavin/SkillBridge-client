@@ -59,7 +59,7 @@ export const adminDashboardService = {
                     Cookie: cookieStore.toString()
                 },
                 next: {
-                    revalidate: 60
+                    tags: ["admin-users"]
                 }
             })
 
@@ -72,6 +72,25 @@ export const adminDashboardService = {
 
         } catch (error) {
             return { data: null, error: "Failed to fetch all users" }
+        }
+    },
+    deleteUser: async (userId: string) => {
+        try {
+            const cookieStore = await cookies()
+            const res = await fetch(`${env.API_URL}/api/admin/users/${userId}`, {
+                method: "DELETE",
+                headers: {
+                    Cookie: cookieStore.toString()
+                }
+            })
+            if (!res.ok) {
+                return { data: null, error: "Failed to delete user" }
+            }
+            const data = await res.json()
+            return { data, error: null }
+
+        } catch (error) {
+            return { data: null, error: "Failed to delete user" }
         }
     }
 }
