@@ -4,11 +4,11 @@ import { adminDashboardService } from "@/components/service/adminDashboard.servi
 
 export default async function AllBookings() {
     const { data, error } = await adminDashboardService.getAllBookings()
-    // console.log(data);
+
     return (
         <div className="grid grid-cols-1 gap-2.5">
             {
-                data.map((booking: BookingType2) => (
+                data?.map((booking: BookingType2) => (
                     <BookingCard key={booking.id} session={booking} isAdmin={true} />
                 ))
             }

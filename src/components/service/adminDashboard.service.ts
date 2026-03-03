@@ -49,5 +49,29 @@ export const adminDashboardService = {
         } catch (error) {
             return { data: null, error: "Failed to fetch all bookings" }
         }
+    },
+
+    getAllUsers: async () => {
+        try {
+            const cookieStore = await cookies()
+            const res = await fetch(`${env.API_URL}/api/admin/users`, {
+                headers: {
+                    Cookie: cookieStore.toString()
+                },
+                next: {
+                    revalidate: 60
+                }
+            })
+
+            if (!res.ok) {
+                return { data: null, error: "Failed to fetch all users" }
+            }
+
+            const data = await res.json()
+            return { data, error: null }
+
+        } catch (error) {
+            return { data: null, error: "Failed to fetch all users" }
+        }
     }
 }
