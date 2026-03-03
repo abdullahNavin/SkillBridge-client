@@ -1,7 +1,6 @@
 import UserDeleteBtn from "@/components/modules/Admin/UserDeleteBtn";
 import { adminDashboardService } from "@/components/service/adminDashboard.service";
-import { DeleteIcon, Edit, Edit2, Edit2Icon } from "lucide-react";
-import { MdDelete, MdDeleteForever } from "react-icons/md";
+import { Edit } from "lucide-react";
 
 export default async function Allusers() {
     const { data, error } = await adminDashboardService.getAllUsers()
