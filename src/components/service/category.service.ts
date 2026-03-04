@@ -41,5 +41,47 @@ export const categoryService = {
         } catch (error) {
             return { data: null, error: "Failed to delete category" }
         }
+    },
+    updateCategory: async (categoryId: string, name: string, description: string) => {
+        try {
+            const cookieStore = await cookies()
+            const res = await fetch(`${Api_url}/category`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString()
+                },
+                body: JSON.stringify({ id: categoryId, name, description })
+            })
+            if (!res.ok) {
+                return { data: null, error: "Failed to update category" }
+            }
+            const data = await res.json()
+            return { data, error: null }
+
+        } catch (error) {
+            return { data: null, error: "Failed to update category" }
+        }
+    },
+
+    createCategory: async (name: string, description: string) => {
+        try {
+            const cookieStore = await cookies()
+            const res = await fetch(`${Api_url}/category`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString()
+                },
+                body: JSON.stringify({ name, description })
+            })
+            if (!res.ok) {
+                return { data: null, error: "Failed to create category" }
+            }
+            const data = await res.json()
+            return { data, error: null }
+        } catch (error) {
+            return { data: null, error: "Failed to create category" }
+        }
     }
 }
