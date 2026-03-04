@@ -22,7 +22,6 @@ export default function SearchComp({ categories }: { categories: Category[] }) {
 
     const router = useRouter()
 
-    // console.log(category, rating, price, search);
     const query = new URLSearchParams()
 
     const handleFilter = () => {

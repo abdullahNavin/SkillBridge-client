@@ -119,7 +119,7 @@ export function Review({ session }: { session: BookingType2 }) {
                             </div>
                         </Field>
 
-                        {/* 📝 Written Review */}
+
                         <Field>
                             <Label htmlFor="review">Written Review</Label>
                             <textarea

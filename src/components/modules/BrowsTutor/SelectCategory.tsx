@@ -18,7 +18,7 @@ export interface Category {
 
 export function SelectCategory({ setCategory, categories }: { setCategory: (category: string) => void, categories: Category[] }) {
 
-    // console.log(categories);
+
     const allOption = { id: " ", name: "All Categories", description: "" }
     categories = [allOption, ...categories]
 

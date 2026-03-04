@@ -5,7 +5,6 @@ export default async function Page() {
 
   // const session = await userService.getSession()
 
-  // console.log(session);
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">

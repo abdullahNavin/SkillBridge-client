@@ -3,9 +3,6 @@
 import { categoryAction, deleteCategoryAction } from "@/actions/category.action";
 import { AddCategory } from "@/components/modules/category/AddCategory";
 import { EditModal } from "@/components/modules/category/EditModal";
-import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
-import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { toast } from "sonner";

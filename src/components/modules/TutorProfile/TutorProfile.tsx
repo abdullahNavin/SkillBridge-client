@@ -127,10 +127,10 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: tutorData.name,
-            bio: tutorData.bio,
-            hourlyRate: tutorData.hourlyRate,
-            yearsOfExperience: tutorData.yearsOfExperience,
-            qualifications: tutorData.qualifications,
+            bio: tutorData.bio ?? "",
+            hourlyRate: tutorData.hourlyRate ?? "",
+            yearsOfExperience: tutorData.yearsOfExperience ?? 0,
+            qualifications: tutorData.qualifications ?? "",
             subjects: parseSubjects(tutorData.subjects),
             availability: parseAvailability(tutorData.availability),
             isAvailable: tutorData.isAvailable,
@@ -278,7 +278,7 @@ export default function TutorProfileEditForm({ categories, tutorData }: { catego
                                             <FormControl>
                                                 <Textarea
                                                     placeholder="Tell students about yourself..."
-                                                    className="resize-none min-h-[110px]"
+                                                    className="resize-none min-h-27.5"
                                                     {...field}
                                                 />
                                             </FormControl>

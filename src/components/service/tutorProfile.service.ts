@@ -61,7 +61,7 @@ export const tutorProfileService = {
 
     updateTutorProfile: async (profileData: PayloadType) => {
         try {
-            console.log(profileData);
+
             const cookieStore = await cookies()
             const res = await fetch(`${env.API_URL}/tutor/update`, {
                 method: 'PATCH',
@@ -73,7 +73,7 @@ export const tutorProfileService = {
             })
             const data = await res.json()
 
-            // console.log(data);
+
 
             if (data.error) {
                 return {

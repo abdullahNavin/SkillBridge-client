@@ -7,7 +7,6 @@ import { toast } from "sonner";
 export default function UserDeleteBtn({ userId }: { userId: string }) {
     const handleUserDelete = async (userId: string) => {
         const res = await deleteUser(userId)
-        console.log(res.data);
         if (res.error) {
             toast.error("Failed to delete user: " + res.error);
         }

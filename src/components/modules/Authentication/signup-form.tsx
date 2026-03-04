@@ -70,7 +70,7 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
           name: data.name,
           userId: userData.user.id,
         })
-        console.log(res); //null
+
         if (!res.data?.id) {
           toast.error("Failed to create tutor profile.")
           return
