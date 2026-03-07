@@ -1,7 +1,5 @@
-import { BookingCard } from "@/components/layout/BookingCard";
 import { TutorSessionCard } from "@/components/modules/TutorProfile/TutorSessionCard";
 import { tutorProfileService } from "@/components/service/tutorProfile.service";
-import { toast } from "sonner";
 
 export interface BookingType2 {
     id: string
@@ -28,11 +26,13 @@ export default async function TutorDashboard() {
     const { data = [], error } = await tutorProfileService.getTutorDashboard()
 
     if (error) {
-        return toast.error(error)
+        return <div className="text-red-500">{error}</div>
     }
+
     if (data?.message) {
-        return toast.warning(data?.message)
+        return <div className="text-yellow-500">{data?.message}</div>
     }
+
     const upcommingSession = data?.bookings.filter((session: BookingType2) => session.status !== BookingStatus.COMPLETED) || []
 
     const completedSession = data?.bookings.filter((session: BookingType2) => session.status === BookingStatus.COMPLETED) || []

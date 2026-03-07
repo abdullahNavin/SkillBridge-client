@@ -7,16 +7,15 @@ export const tutorRoutes: RouteType[] = [
         items: [
             {
                 title: "Dashboard",
-                url: "/tutor-dashboard",
+                url: "/tutor-dashboard"
             },
             {
                 title: "My Session",
-                url: "/tutor-dashboard/session",
-                isActive: true,
+                url: "/tutor-dashboard/session"
             },
             {
                 title: "My Profile",
-                url: "/tutor-dashboard/profile",
+                url: "/tutor-dashboard/profile"
             },
             {
                 title: 'Home',
