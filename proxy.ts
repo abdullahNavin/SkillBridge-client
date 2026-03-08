@@ -1,6 +1,6 @@
+import { userService } from "@/components/service/user.service";
+import { UserRole } from "@/constant/userRole";
 import { NextRequest, NextResponse } from "next/server"
-import { userService } from "./components/service/user.service"
-import { UserRole } from "./constant/userRole";
 
 export const proxy = async (request: NextRequest) => {
     const { data } = await userService.getSession()

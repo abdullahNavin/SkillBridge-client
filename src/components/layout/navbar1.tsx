@@ -88,6 +88,9 @@ const Navbar1 = ({
   className,
 }: Navbar1Props) => {
 
+  const cheackSession = authClient.useSession()
+  console.log("Session in Navbar:", cheackSession);
+
   let route;
   switch (session?.role) {
     case UserRole.student:
@@ -134,6 +137,7 @@ const Navbar1 = ({
         <nav className="hidden items-center justify-between lg:flex">
           {/* Logo */}
           <Link href={logo.url} className="flex items-center gap-2">
+            {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
             <img
               src={logo.src}
               className="max-h-12"
@@ -183,6 +187,7 @@ const Navbar1 = ({
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href={logo.url} className="flex items-center gap-2">
+              {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
               <img
                 src={logo.src}
                 className="max-h-8"

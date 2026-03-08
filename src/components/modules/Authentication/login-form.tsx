@@ -64,7 +64,7 @@ export function LoginForm({
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:3000",
+        callbackURL: FrontendUrl,
       })
     } catch (err) {
       console.error("Google login failed:", err)

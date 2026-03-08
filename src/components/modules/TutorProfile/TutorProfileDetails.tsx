@@ -7,12 +7,13 @@ import TutorProfileTab from "./TutorProfileTab";
 
 export default async function TutorProfileDetails({ tutorDetails }: { tutorDetails: Tutor }) {
     const session = await userService.getSession()
+    console.log(session);
     return (
         <div>
             <TutorProfileHeader tutorDetails={tutorDetails} />
             <div className="flex flex-col md:flex-row gap-5">
                 <TutorProfileTab tutorDetails={tutorDetails} />
-                <TutorBookingTab tutorDetails={tutorDetails} session={session.data.user} />
+                <TutorBookingTab tutorDetails={tutorDetails} session={session?.data?.user} />
             </div>
         </div>
     );

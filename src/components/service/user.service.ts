@@ -15,9 +15,10 @@ export const userService = {
                 cache: 'no-store'
             })
             const session = await res.json()
+            console.log("session:", session);
             return { data: session, error: null }
 
-        } catch (error) {
+        } catch (_error) {
             return { data: null, error: "Failed to fetch session" }
         }
     },
@@ -34,7 +35,7 @@ export const userService = {
             })
             const data = await res.json()
             return { data, error: null }
-        } catch (error) {
+        } catch (_error) {
             return { data: null, error: "Failed to update profile" }
         }
     }
