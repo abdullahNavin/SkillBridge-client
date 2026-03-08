@@ -1,13 +1,5 @@
 {
-  "buildCommand": "pnpm build",
-  "installCommand": "pnpm install",
-  "env": {
-    "BACKEND_URL": "@backend_url",
-    "FRONTEND_URL": "@frontend_url",
-    "NEXT_PUBLIC_FRONTEND_URL": "@next_public_frontend_url",
-    "API_URL": "@api_url",
-    "AUTH_URL": "@auth_url"
-  },
+  "buildCommand": "pnpm run build",
   "headers": [
     {
       "source": "/api/auth/(.*)",
@@ -24,3 +16,5 @@
     }
   ]
 }
+
+
