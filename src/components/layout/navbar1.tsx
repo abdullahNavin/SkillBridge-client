@@ -88,8 +88,8 @@ const Navbar1 = ({
   className,
 }: Navbar1Props) => {
 
-  const cheackSession = authClient.useSession()
-  console.log("Session in Navbar:", cheackSession);
+  // const cheackSession = authClient.useSession()
+  // console.log("Session in Navbar:", cheackSession);
 
   let route;
   switch (session?.role) {
