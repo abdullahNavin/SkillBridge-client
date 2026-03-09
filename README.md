@@ -156,7 +156,7 @@ const authClient = createAuthClient({
 
 ### Prerequisites
 - Node.js 18+
-- pnpm (package manager)
+- npm (package manager)
 
 ### Installation
 
@@ -166,7 +166,7 @@ git clone https://github.com/abdullahNavin/SkillBridge-client.git
 cd skill_ridge_client
 
 # Install dependencies
-pnpm install
+npm install
 
 # Setup environment variables
 cp .env.example .env.local
@@ -190,7 +190,7 @@ NEXT_PUBLIC_FRONTEND_URL=http://localhost:3000
 
 ```bash
 # Start development server
-pnpm dev
+npm dev
 
 # Open browser
 # http://localhost:3000
@@ -200,10 +200,10 @@ pnpm dev
 
 ```bash
 # Build optimized bundle
-pnpm build
+npm build
 
 # Start production server
-pnpm start
+npm start
 ```
 
 ## 📊 API Endpoints
@@ -215,23 +215,23 @@ pnpm start
 - `GET /api/auth/get-session` - Get current session
 
 ### Tutors
-- `GET /api/tutors` - List tutors with filters
-- `GET /api/tutors/:id` - Get tutor details
-- `PUT /api/tutors/:id` - Update tutor profile
+- `GET /tutors` - List tutors with filters
+- `GET /tutors/:id` - Get tutor details
+- `PUT /tutors/:id` - Update tutor profile
 
 ### Bookings
-- `POST /api/bookings` - Create booking
-- `GET /api/bookings` - Get user bookings
-- `PUT /api/bookings/:id` - Update booking
-- `DELETE /api/bookings/:id` - Cancel booking
+- `POST /bookings` - Create booking
+- `GET /bookings` - Get user bookings
+- `PUT /bookings/:id` - Update booking
+- `DELETE /bookings/:id` - Cancel booking
 
 ### Reviews
-- `POST /api/reviews` - Create review
-- `GET /api/reviews/tutor/:id` - Get tutor reviews
+- `POST /reviews` - Create review
+- `GET /reviews/tutor/:id` - Get tutor reviews
 
 ### Categories
-- `GET /api/categories` - List categories
-- `POST /api/categories` - Create category (admin only)
+- `GET /categories` - List categories
+- `POST /categories` - Create category (admin only)
 
 ## 🔧 Configuration Files
 
@@ -239,11 +239,6 @@ pnpm start
 - Image optimization settings
 - API route rewrites for auth paths
 - Cache control headers
-
-### `vercel.json`
-- Vercel deployment configuration
-- Build and install commands
-- Cache headers for auth routes
 
 ### `tsconfig.json`
 - TypeScript strict mode
@@ -290,13 +285,13 @@ pnpm start
 
 ### Build Errors
 - Clear `.next/` directory: `rm -rf .next/`
-- Reinstall dependencies: `pnpm install`
+- Reinstall dependencies: `npm install`
 - Check environment variables are properly set
 
 ### API Connection Issues
 - Verify `BACKEND_URL` is correct and reachable
 - Check network tab in browser DevTools
-- Ensure backend server is running
+- Ensure the backend server is running
 
 ## 📚 Technologies Used
 
@@ -315,10 +310,9 @@ pnpm start
 ## 📝 Available Scripts
 
 ```bash
-pnpm dev      # Start development server
-pnpm build    # Build for production
-pnpm start    # Start production server
-pnpm lint     # Run ESLint
+npm dev      # Start development server
+npm build    # Build for production
+npm start    # Start production server
 ```
 
 ## 🎯 Future Enhancements
@@ -344,7 +338,7 @@ This project is proprietary and closed source.
 
 For issues, questions, or contributions:
 - GitHub Issues: [Open an issue](https://github.com/abdullahNavin/SkillBridge-client/issues)
-- Email: [Contact Developer]
+- Email: navinhp26@gmail.com
 
 ---
 
