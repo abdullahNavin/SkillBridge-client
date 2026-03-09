@@ -1,10 +1,10 @@
-# Skill Ridge - Tutoring Platform
+# Skill Bridge - Tutoring Platform
 
-A modern, full-stack tutoring marketplace application built with **Next.js 16** and **TypeScript**. Skill Ridge connects students with qualified tutors, enabling bookings, reviews, and profile management through intuitive dashboards.
+A modern, full-stack tutoring marketplace application built with **Next.js 16** and **TypeScript**. Skill Bridge connects students with qualified tutors, enabling bookings, reviews, and profile management through intuitive dashboards.
 
 ## 📋 Project Overview
 
-Skill Ridge is a comprehensive tutoring platform that provides:
+Skill Bridge is a comprehensive tutoring platform that provides:
 - **Multi-role Authentication**: Student, Tutor, and Admin roles with Better Auth
 - **Tutor Discovery**: Browse and filter tutors by category, price, and rating
 - **Booking System**: Students can book sessions with tutors
