@@ -21,6 +21,7 @@ import { authClient } from "@/lib/auth-client"
 import { useForm } from "react-hook-form"
 import { env } from "@/env"
 import { toast } from "sonner"
+import { useState } from "react"
 
 type LoginFormValues = {
   email: string
@@ -29,10 +30,30 @@ type LoginFormValues = {
 
 const FrontendUrl = env.NEXT_PUBLIC_FRONTEND_URL
 
+const demoCredentials = [
+  {
+    role: "Admin",
+    email: "admin@skillbridge.com",
+    password: "adminSkillBridge123",
+  },
+  {
+    role: "Tutor",
+    email: "tutorfinal@gamil.com",
+    password: "tutor123",
+  },
+  {
+    role: "Student",
+    email: "studentfinal@gmail.com",
+    password: "student123",
+  },
+]
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [demoRoleLoading, setDemoRoleLoading] = useState<string | null>(null)
+
   const {
     register,
     handleSubmit,
@@ -40,7 +61,7 @@ export function LoginForm({
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>()
 
-  const onSubmit = async (data: LoginFormValues) => {
+  const signInWithCredentials = async (data: LoginFormValues) => {
     try {
       const { data: userData, error } = await authClient.signIn.email({
         email: data.email,
@@ -58,6 +79,19 @@ export function LoginForm({
     } catch (err) {
       console.error("Login failed:", err)
     }
+  }
+
+  const onSubmit = async (data: LoginFormValues) => {
+    await signInWithCredentials(data)
+  }
+
+  const handleDemoLogin = async (credential: LoginFormValues & { role: string }) => {
+    setDemoRoleLoading(credential.role)
+    await signInWithCredentials({
+      email: credential.email,
+      password: credential.password,
+    })
+    setDemoRoleLoading(null)
   }
 
   const handleGoogleLogin = async () => {
@@ -137,7 +171,7 @@ export function LoginForm({
 
               {/* Actions */}
               <Field>
-                <Button type="submit" className="cursor-pointer" disabled={isSubmitting}>
+                <Button type="submit" className="cursor-pointer" disabled={isSubmitting || demoRoleLoading !== null}>
                   Login
                 </Button>
 
@@ -146,9 +180,27 @@ export function LoginForm({
                   variant="outline"
                   onClick={handleGoogleLogin}
                   className="cursor-pointer"
+                  disabled={isSubmitting || demoRoleLoading !== null}
                 >
                   Login with Google
                 </Button>
+
+                <div className="grid gap-2">
+                  {demoCredentials.map((credential) => (
+                    <Button
+                      key={credential.role}
+                      type="button"
+                      variant="secondary"
+                      onClick={() => handleDemoLogin(credential)}
+                      disabled={isSubmitting || demoRoleLoading !== null}
+                      className="cursor-pointer"
+                    >
+                      {demoRoleLoading === credential.role
+                        ? `Signing in as ${credential.role}...`
+                        : `Demo ${credential.role} Login`}
+                    </Button>
+                  ))}
+                </div>
 
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}

@@ -1,5 +1,4 @@
 import { LoginForm } from "@/components/modules/Authentication/login-form"
-import { userService } from "@/components/service/user.service"
 
 export default async function Page() {
 
